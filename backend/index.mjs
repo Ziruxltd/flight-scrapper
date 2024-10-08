@@ -1,8 +1,20 @@
 import express from 'express';
 import { chromium } from 'playwright';
+import cors from 'cors';
+import { iberiaDestinations } from './src/destinations.mjs';
 
+const destinations = await iberiaDestinations();
+console.log(destinations);
+
+
+const port = 3005;
 const app = express();
-const port = 3001;
+
+app.use(cors());
+
+app.get('/destinations', (req, res) => {
+  res.send(destinations);
+});
 
 app.get('/api', async (req, res) => {
   const PAGE = 'https://www.joyeriasuarez.com/es/joyeria/novedad/orion/';

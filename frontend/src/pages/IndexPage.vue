@@ -86,21 +86,19 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
-
-async function play() {
-  console.log("loading...");
-
-  const PAGE = "https://www.joyeriasuarez.com/es/joyeria/novedad/orion/";
-
-
-}
+import { ref, onMounted } from "vue";
+import { getDestinations } from "src/services";
 
 const departurePoint = ref("");
 const arrivalPoint = ref("");
 const fromDate = ref("");
 const toDate = ref("");
 const noStop = ref(true);
+const destinations = ref([]);
+
+onMounted( async () => {
+  destinations.value = await getDestinations();
+});
 
 function submit() {
   const form = {
@@ -111,6 +109,5 @@ function submit() {
     noStop: noStop.value,
   };
   console.log("form: ", form);
-  play();
 }
 </script>
